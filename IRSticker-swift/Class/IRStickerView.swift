@@ -48,6 +48,14 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    public var currentRotation: CGFloat {
+        atan2(contentView.transform.b, contentView.transform.a)
+    }
+    
+    public var currentscale: CGFloat {
+        self.contentView.layer.value(forKeyPath: "transform.scale") as! CGFloat
+    }
+    
     var stickerControlViewSize: CGFloat = defaultStickerControlViewSize
     var stickerHalfControlViewSize: CGFloat {
         return stickerControlViewSize / 2
