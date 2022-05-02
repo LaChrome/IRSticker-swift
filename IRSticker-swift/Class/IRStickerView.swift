@@ -222,7 +222,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     }
     
     func handleTapContentView() {
-        self.superview?.bringSubviewToFront(self)
+//        self.superview?.bringSubviewToFront(self)
         // Perform animation
         if self.enabledShakeAnimation {
             self.performShakeAnimation(targetView: self)
