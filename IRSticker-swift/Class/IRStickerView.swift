@@ -63,18 +63,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
             self.contentView.layer.value(forKeyPath: "transform.scale") as! CGFloat
         }
         set {
-            var scale = newValue
-            // Scale limit
-            let currentScale: CGFloat = self.contentView.layer.value(forKeyPath: "transform.scale") as! CGFloat
-            if (!(stickerMinScale == 0 && stickerMaxScale == 0)) {
-                if (scale * currentScale <= stickerMinScale) {
-                    scale = stickerMinScale / currentScale;
-                } else if (scale * currentScale >= stickerMaxScale) {
-                    scale = stickerMaxScale / currentScale;
-                }
-            }
-            
-            self.contentView.transform = self.contentView.transform.scaledBy(x: scale, y: scale)
+            self.contentView.transform = self.contentView.transform.scaledBy(x: newValue, y: newValue)
             
             relocalControlView()
         }
