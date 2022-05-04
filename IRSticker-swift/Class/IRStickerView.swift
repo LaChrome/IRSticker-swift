@@ -60,7 +60,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     
     public var currentscale: CGFloat {
         get {
-            self.contentView.layer.value(forKeyPath: "transform.scale") as! CGFloat
+            sqrt(pow(self.contentView.transform.a, 2) + pow(self.contentView.transform.c, 2))
         }
         set {
             self.contentView.transform = self.contentView.transform.scaledBy(x: newValue, y: newValue)
