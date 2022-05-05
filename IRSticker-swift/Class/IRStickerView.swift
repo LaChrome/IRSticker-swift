@@ -217,12 +217,17 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
         tapRecognizer5.numberOfTapsRequired = 1
         tapRecognizer5.delegate = self
         self.rightBottomControl.addGestureRecognizer(tapRecognizer5)
+        
+        let doubleTapRecogniser = UITapGestureRecognizer.init(target: self, action: #selector(handleTap(gesture:)))
+        doubleTapRecogniser.numberOfTapsRequired = 2
+        doubleTapRecogniser.delegate = self
+        self.contentView.addGestureRecognizer(doubleTapRecogniser)
     }
     
 // MARK: - Handle Gestures
     @objc func handleTap(gesture: UITapGestureRecognizer) {
         if gesture.view == self.contentView {
-            self.handleTapContentView()
+            gesture.numberOfTapsRequired == 2 ? self.delegate?.ir_StickerViewDidDoubleTapContentView(stickerView: self) : self.handleTapContentView()
         } else if gesture.view == self.leftTopControl {
             if self.enableLeftTopControl {
                 self.delegate?.ir_StickerViewDidTapLeftTopControl(stickerView: self)
@@ -252,6 +257,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     }
     
     @objc func handleMove(gesture: UIPanGestureRecognizer) {
+        guard self.enabledControl else { return }
         let translation = gesture.translation(in: self.superview)
         // Boundary detection
         var targetPoint = CGPoint.init(x: self.center.x + translation.x, y: self.center.y + translation.y)
@@ -265,6 +271,8 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     }
     
     @objc func handleScale(gesture: UIPinchGestureRecognizer) {
+        guard self.enabledControl else { return }
+        
         var scale = gesture.scale;
         // Scale limit
         let currentScale: CGFloat = self.contentView.layer.value(forKeyPath: "transform.scale") as! CGFloat
@@ -283,6 +291,9 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     }
     
     @objc func handleRotate(gesture: UIRotationGestureRecognizer) {
+        
+        guard self.enabledControl else { return }
+        
         self.contentView.transform = self.contentView.transform.rotated(by: gesture.rotation)
         gesture.rotation = 0;
         
@@ -290,6 +301,9 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     }
     
     @objc func handleSingleHandAction(gesture: IRStickerGestureRecognizer) {
+        
+        guard self.enabledControl else { return }
+        
         var scale = gesture.scale;
         // Scale limit
         let currentScale: CGFloat = self.contentView.layer.value(forKeyPath: "transform.scale") as! CGFloat
@@ -439,6 +453,8 @@ public protocol IRStickerViewDelegate: NSObjectProtocol {
     func ir_StickerView(stickerView: IRStickerView, imageForRightBottomControl recommendedSize: CGSize) -> UIImage?
 
     func ir_StickerViewDidTapRightBottomControl(stickerView: IRStickerView) // Effective when image is provided.
+    
+    func ir_StickerViewDidDoubleTapContentView(stickerView: IRStickerView)
 }
 
 public extension IRStickerViewDelegate {
@@ -459,6 +475,8 @@ public extension IRStickerViewDelegate {
     func ir_StickerView(stickerView: IRStickerView, imageForRightBottomControl recommendedSize: CGSize) -> UIImage? { return stickerView.rightBottomControl.image }
 
     func ir_StickerViewDidTapRightBottomControl(stickerView: IRStickerView) {}
+    
+    func ir_StickerViewDidDoubleTapContentView(stickerView: IRStickerView) {}
 }
 
 
