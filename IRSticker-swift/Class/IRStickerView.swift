@@ -79,7 +79,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     var leftTopControl: UIImageView!
     var rightTopControl: UIImageView!
     var leftBottomControl: UIImageView!
-    var rightBottomControl: UIImageView!
+    public var rightBottomControl: UIImageView!
 
     var shapeLayer: CAShapeLayer!
 
