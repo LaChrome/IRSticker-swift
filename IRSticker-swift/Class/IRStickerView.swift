@@ -256,7 +256,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
         self.delegate?.ir_StickerViewDidTapContentView(stickerView: self)
     }
     
-    @objc func handleMove(gesture: UIPanGestureRecognizer) {
+    @objc public func handleMove(gesture: UIPanGestureRecognizer) {
         guard self.enabledControl else { return }
         let translation = gesture.translation(in: self.superview)
         // Boundary detection
@@ -270,7 +270,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
         gesture.setTranslation(CGPoint.zero, in: self.superview)
     }
     
-    @objc func handleScale(gesture: UIPinchGestureRecognizer) {
+    @objc public func handleScale(gesture: UIPinchGestureRecognizer) {
         guard self.enabledControl else { return }
         
         var scale = gesture.scale;
@@ -290,7 +290,7 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
         relocalControlView()
     }
     
-    @objc func handleRotate(gesture: UIRotationGestureRecognizer) {
+    @objc public func handleRotate(gesture: UIRotationGestureRecognizer) {
         
         guard self.enabledControl else { return }
         
